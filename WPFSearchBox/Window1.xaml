@@ -1,0 +1,204 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        x:Class="WpfApp1.Window1"
+        mc:Ignorable="d"
+        Title="Window1" Height="290" MinHeight="290" Width="200">
+
+    <Window.Resources>
+        <Thickness x:Key="lableMargin">0,0,40,0</Thickness>
+        <Thickness x:Key="lableMargin01">0,0,5,0</Thickness>
+
+        <SolidColorBrush x:Key="gridPathBackground" Opacity="1" Color="Red"/>
+        <system:Double x:Key="gridPathHieght">0.5</system:Double>
+
+        <Thickness x:Key="dockPanelMargin">1</Thickness>
+
+        <SolidColorBrush x:Key="lableForeground" Opacity="1" Color="Red"/>
+        <SolidColorBrush x:Key="lableForeground01" Opacity="1" Color="#c0c000"/>
+        <SolidColorBrush x:Key="lableForeground02" Opacity="1" Color="#00e600"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock x:Name="martelName" TextWrapping="Wrap" Text="贵州茅台" FontSize="16" Foreground="#b3a905" HorizontalAlignment="Center"/>            
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical" >
+                <Grid Background="{StaticResource gridPathBackground}" Height="{StaticResource gridPathHieght}" Width="Auto"></Grid>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="卖五" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="卖四" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="卖三" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="卖二" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="卖一" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <Grid Background="{StaticResource gridPathBackground}" Height="{StaticResource gridPathHieght}" Width="Auto"></Grid>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="买五" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="买四" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="买三" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="买二" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="买一" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="762.52" Foreground="Red" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="8"  HorizontalAlignment="Right"/>
+                    </Grid>
+                </DockPanel>
+                <Grid Background="{StaticResource gridPathBackground}" Height="{StaticResource gridPathHieght}" Width="Auto"></Grid>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="现价" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Right" Text="19.98" Margin="{StaticResource lableMargin01}" Foreground="{StaticResource lableForeground}" />
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="今开" />
+                        <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="739.02" HorizontalAlignment="Right" Foreground="{StaticResource lableForeground02}"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="涨跌" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Right" Text="19.98" Margin="{StaticResource lableMargin01}" Foreground="{StaticResource lableForeground}" />
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="最高" />
+                        <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="739.02" HorizontalAlignment="Right" Foreground="{StaticResource lableForeground}"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Margin="{StaticResource dockPanelMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="Wrap" Text="涨幅" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Right" Text="19.98" Margin="{StaticResource lableMargin01}" Foreground="{StaticResource lableForeground}" />
+                        <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="最低" />
+                        <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="739.02" HorizontalAlignment="Right" Foreground="{StaticResource lableForeground02}"/>
+                    </Grid>
+                </DockPanel>
+                <Grid Background="{StaticResource gridPathBackground}" Height="{StaticResource gridPathHieght}" Width="Auto"></Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

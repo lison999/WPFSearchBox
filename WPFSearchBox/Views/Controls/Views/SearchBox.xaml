@@ -1,0 +1,434 @@
+﻿<Window x:Class="WpfApp1.Views.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ctl="clr-namespace:System.Windows.Controls;assembly=DotNetProjects.Input.Toolkit"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:ii="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+            xmlns:local="clr-namespace:WpfApp1.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+       
+            <!--<local:SearchCondition Type="OrderType" Value="limit" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionLimit"></local:SearchCondition>
+            <local:SearchCondition Type="OrderType" Value="Market" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionMarket"></local:SearchCondition>
+            <local:SearchCondition Type="Side" Value="Buy" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionBuy"></local:SearchCondition>
+            <local:SearchCondition Type="Side" Value="Sell" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionSell"></local:SearchCondition>-->
+            <ControlTemplate x:Key="SearchBoxMagnifyTemplate" TargetType="{x:Type Button}">
+                <Grid Width="40" Height="30">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="MouseOver">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <!--<Border  x:Name="mouseup" Background="Transparent"/>
+                <Border  x:Name="mouseover" CornerRadius="1" BorderBrush="#E1E1E1" Background="#E1E1E1"/>
+                <Border  x:Name="mousedown" CornerRadius="1" BorderBrush="#AEAEAE" Background="#AEAEAE"/>
+                <Image RenderOptions.EdgeMode="Aliased" Source="pack://application:,,,/assets/btn_search.png" Width="18" Height="18"/>-->
+
+                    <Border x:Name="mouseup" CornerRadius="2,0,0,2" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Image RenderOptions.EdgeMode="Aliased" Source="pack://application:,,,/assets/btn_search.png" Width="18" Height="18" Margin="6,0,0,0"/>
+                            <Image Source="pack://application:,,,/assets/btn_sort_arrow.png" Width="9" Height="5" Margin="3,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="mouseover"  CornerRadius="2,0,0,2" Background="#D5D5D5">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Image RenderOptions.EdgeMode="Aliased" Source="pack://application:,,,/assets/btn_search.png" Width="18" Height="18" Margin="6,0,0,0"/>
+                            <Image Source="pack://application:,,,/assets/btn_sort_arrow.png" Width="9" Height="5" Margin="3,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="mousedown" CornerRadius="2,0,0,2" Background="#AEAEAE">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Image RenderOptions.EdgeMode="Aliased" Source="pack://application:,,,/assets/btn_search.png" Width="18" Height="18" Margin="6,0,0,0"/>
+                            <Image Source="pack://application:,,,/assets/btn_sort_arrow.png" Width="9" Height="5" Margin="3,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="SearchBoxDelTemplate" TargetType="{x:Type Button}">
+                <Grid>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="MouseOver">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <StackPanel>
+                        <Ellipse  x:Name="mouseup" Fill="Transparent"/>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,6,0">
+                        <Ellipse  x:Name="mouseover" Fill="#E1E1E1" Opacity="0.9" Height="16" Width="16" />
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,6,0">
+                        <Ellipse  x:Name="mousedown" Fill="#AEAEAE" Opacity="0.7" Height="16" Width="16" />
+                    </StackPanel>
+                    <Image RenderOptions.EdgeMode="Aliased" Source="pack://application:,,,/assets/btn_search_delete.png"  Width="16" Height="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,6,0"/>
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="SearchItemDelTemplate" TargetType="{x:Type Button}">
+                <Grid>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="disable">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="MouseOver">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="disable">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="disable">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseover">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mouseup">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="mousedown">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="disable">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Border x:Name="mouseup" BorderBrush="Transparent" Background="Transparent" BorderThickness="0" CornerRadius="0,5,5,0"/>
+                    <Border x:Name="mouseover" BorderBrush="#37aaff" Background="#34a0e2" BorderThickness="0" CornerRadius="0,5,5,0"/>
+                    <Border x:Name="mousedown" BorderBrush="#95e2f9" Background="#206189" BorderThickness="0" CornerRadius="0,5,5,0"/>
+                    <Border x:Name="disable" BorderBrush="#32c0f9" Background="#34a0e2" BorderThickness="0" CornerRadius="0,5,5,0"/>
+                    <Image RenderOptions.EdgeMode="Aliased" Source="pack://application:,,,/assets/btn_index_delete.png"  Width="18" Height="18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </Grid>
+            </ControlTemplate>
+
+            <Style x:Key="PopUpOutBorderStyle" TargetType="{x:Type Border}" >
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="#808080"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="0,3,0,3"/>
+                <Setter Property="CornerRadius" Value="2"/>
+            </Style>
+
+            <Style x:Key="PopupLabelBackgroundStyle" TargetType="Border">
+                <Setter Property="Background" Value="#e1e1e1"/>
+                <Setter Property="Margin" Value="0,3,0,3"/>
+                <Setter Property="Height" Value="26"/>
+            </Style>
+
+            <Style x:Key="PopupLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Foreground" Value="#6a6a6a"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="SearchConditionButton" TargetType="Button">
+                <Setter Property="Height" Value="22"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="FontFamily" Value="Meiryo UI"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Foreground" Value="LightGray"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="SearchItemStyle" TargetType="Border">
+                <Setter Property="Background" Value="#2877b2"/>
+                <Setter Property="Padding" Value="0,0,0,1"/>
+                <Setter Property="Margin" Value="0,0,4,0"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Border Width="Auto"
+            Height="30"
+            CornerRadius="2"
+            BorderBrush="#aeaeae"
+            BorderThickness="1"
+            Background="White">
+            <Grid Height="28px" Width="{Binding SearchBoxWidth, Mode=TwoWay}" ShowGridLines="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40px" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="25px" />
+                </Grid.ColumnDefinitions>
+                <!--<Button Content="搜索" x:Name="SelectSearchConditionBtn" Click="SelectSearchConditionBtn_Click"/>-->
+                <Button Grid.Row="0" Grid.Column="0"
+                    x:Name="SelectSearchConditionBtn" Click="SelectSearchConditionBtn_Click"
+                    BorderThickness="0, 0, 0, 0" Width="40" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Background="Transparent" Template="{StaticResource SearchBoxMagnifyTemplate}" 
+                    />
+                <ScrollViewer Name="SearchConditionsScrollView"
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden"
+                          Background="White"
+                          >
+                    <StackPanel Name="SearchConditionsStack"
+                            Width="Auto"
+                            Height="24"
+                            Orientation="Horizontal">
+                        <ItemsControl x:Name="_itemsControl" ItemsSource="{Binding SelectConditionTypes}">
+                            <ItemsControl.Style>
+                                <Style TargetType="{x:Type ItemsControl}">
+                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="Auto" Height="24"
+                                                        CornerRadius="5"
+                                                        Style="{StaticResource SearchItemStyle}">
+                                        <StackPanel Width="Auto" Height="24" Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=Value}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Margin" Value="5,0,0,0"/>
+                                                        <Setter Property="Width" Value="Auto"/>
+                                                        <Setter Property="Height" Value="Auto"/>
+                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Setter Property="FontFamily" Value="Meiryo UI"/>
+                                                        <Setter Property="FontSize" Value="10"/>
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="FontWeight" Value="Normal"/>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <Button
+                                                Command="{Binding DelConditionCommand}" 
+                                                CommandParameter="{Binding Id}"
+                                                Width="24"
+                                                Height="24"
+                                                BorderThickness="0"
+                                                Margin="2,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Background="Transparent" Template="{StaticResource SearchItemDelTemplate}">                                                                                          
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBox BorderThickness="0" MinWidth="300" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
+                    </StackPanel>
+                </ScrollViewer>
+              
+                <Button Grid.Row="0" Grid.Column="2"
+                    Command="{Binding DelConditionCommand}"
+                    BorderThickness="0"
+                    Visibility="Visible"
+                    Background="Transparent" Template="{StaticResource SearchBoxDelTemplate}">                             
+                </Button>
+            </Grid>
+        </Border>
+        <Popup Name="SelectSearchConditions"                
+                   StaysOpen="False"
+                   PlacementTarget="{Binding ElementName=SelectSearchConditionBtn}"
+                   Placement="Bottom"
+                   AllowsTransparency="True"
+                   HorizontalOffset="0"
+                   VerticalOffset="2"
+                   >
+            <StackPanel MinWidth="60" 
+                            Height="Auto"
+                            Orientation="Vertical">
+                <Border Width="Auto" Height="Auto" Style="{DynamicResource PopUpOutBorderStyle}">
+                    <StackPanel MinWidth="100" Height="Auto" Orientation="Vertical">                       
+                        <ItemsControl ItemsSource="{Binding SearchConditions}">
+                            <ItemsControl.Style>
+                                <Style TargetType="{x:Type ItemsControl}">
+                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <Border Style="{StaticResource PopupLabelBackgroundStyle}">
+                                            <TextBlock Text="{Binding Title}" Style="{StaticResource PopupLabelStyle}"/>
+                                        </Border>
+                                        <ItemsControl ItemsSource="{Binding ConditionTypePanel.ConditionTypes}">
+                                            <ItemsControl.Style>
+                                                <Style TargetType="{x:Type ItemsControl}">
+                                                    <Setter Property="IsTabStop" Value="False"/>
+                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                                                </Style>
+                                            </ItemsControl.Style>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Button 
+                                                        Command="{Binding Path=DataContext.SelectConditionCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" 
+                                                        CommandParameter="{Binding Id}"
+                                                        Style="{StaticResource SearchConditionButton}" 
+                                                        IsEnabled="{Binding IsActive}">
+                                                        <Button.Template>
+                                                            <ControlTemplate>
+                                                                <Border Background="{TemplateBinding Background}" x:Name="SearchConditionBackground">
+                                                                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                                                        <TextBlock Text="{Binding Value}" VerticalAlignment="Center" Margin="5,0"/>
+                                                                    </StackPanel>
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                                        <Setter Property="Background" Value="#dceaf7" TargetName="SearchConditionBackground"/>
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsEnabled" Value="false">
+                                                                        <Setter Property="Background" Value="LightGray" TargetName="SearchConditionBackground"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                    </Button>                                                    
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Popup>
+    </Grid>
+</Window>

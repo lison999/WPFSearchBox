@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9E514969-D36A-494E-840F-77D21EF093D8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>WpfApp1</RootNamespace>
+    <AssemblyName>WpfApp1</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>packages\ControlzEx.4.3.0\lib\net462\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.Desktop.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v20.1.Core, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v20.1.Core, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DotNetProjects.Input.Toolkit, Version=6.0.90.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetProjects.WpfToolkit.Input.6.0.90\lib\net40\DotNetProjects.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
+      <HintPath>packages\MahApps.Metro.2.0.0\lib\net47\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>packages\Prism.Wpf.8.1.97\lib\net47\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controls\SearchBox.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\DataGridEx.xaml.cs">
+      <DependentUpon>DataGridEx.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Simple Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\SearchBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataGridEx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="assets\btn_search.png" />
+    <Resource Include="assets\btn_sort_arrow.png" />
+    <Resource Include="assets\anm_scanloading_s.png" />
+    <Resource Include="assets\btn_add_tag.png" />
+    <Resource Include="assets\btn_App_link.png" />
+    <Resource Include="assets\btn_arrow_right.png" />
+    <Resource Include="assets\btn_arrow_under.png" />
+    <Resource Include="assets\btn_arrow_window_left.png" />
+    <Resource Include="assets\btn_arrow_window_right.png" />
+    <Resource Include="assets\btn_cancel_s.png" />
+    <Resource Include="assets\btn_contentsview.png" />
+    <Resource Include="assets\btn_detail_cloud.png" />
+    <Resource Include="assets\btn_detail_edit.png" />
+    <Resource Include="assets\btn_edit_ocr.png" />
+    <Resource Include="assets\btn_File_export.png" />
+    <Resource Include="assets\btn_index_delete.png" />
+    <Resource Include="assets\btn_mail.png" />
+    <Resource Include="assets\btn_notice.png" />
+    <Resource Include="assets\btn_poi.png" />
+    <Resource Include="assets\btn_scan.png" />
+    <Resource Include="assets\btn_search_delete.png" />
+    <Resource Include="assets\btn_sort_ascending.png" />
+    <Resource Include="assets\btn_sort_descending.png" />
+    <Resource Include="assets\btn_sort_disable.png" />
+    <Resource Include="assets\btn_star_off.png" />
+    <Resource Include="assets\btn_star_on.png" />
+    <Resource Include="assets\btn_toolbar_ScanSnap Cloud.png" />
+    <Resource Include="assets\btn_toolbar_star_off.png" />
+    <Resource Include="assets\btn_toolbar_star_on.png" />
+    <Resource Include="assets\btn_toolbar_ThisPC.png" />
+    <Resource Include="assets\btn_url.png" />
+    <Resource Include="assets\btn_View_all.png" />
+    <Resource Include="assets\btn_view_detaildata.png" />
+    <Resource Include="assets\btn_View_range.png" />
+    <Resource Include="assets\btn_view_summary.png" />
+    <Resource Include="assets\btn_view_thumbnail.png" />
+    <Resource Include="assets\checkbox_off.png" />
+    <Resource Include="assets\checkbox_on.png" />
+    <Resource Include="assets\circle2.png" />
+    <Resource Include="assets\ctl_slider.png" />
+    <Resource Include="assets\icn_allcontents.png" />
+    <Resource Include="assets\icn_arrow_data.png" />
+    <Resource Include="assets\icn_australia_16.png" />
+    <Resource Include="assets\icn_blank_image.png" />
+    <Resource Include="assets\icn_canadaE_16.png" />
+    <Resource Include="assets\icn_canadaF_16.png" />
+    <Resource Include="assets\icn_caution.png" />
+    <Resource Include="assets\icn_china_16.png" />
+    <Resource Include="assets\icn_classification_bisinesscard.png" />
+    <Resource Include="assets\icn_classification_company.png" />
+    <Resource Include="assets\icn_classification_company_dg.png" />
+    <Resource Include="assets\icn_classification_date.png" />
+    <Resource Include="assets\icn_classification_date_dg.png" />
+    <Resource Include="assets\icn_classification_document.png" />
+    <Resource Include="assets\icn_classification_history.png" />
+    <Resource Include="assets\icn_classification_keyword.png" />
+    <Resource Include="assets\icn_classification_name.png" />
+    <Resource Include="assets\icn_classification_name_dg.png" />
+    <Resource Include="assets\icn_classification_photo.png" />
+    <Resource Include="assets\icn_classification_receipt.png" />
+    <Resource Include="assets\icn_classification_shop.png" />
+    <Resource Include="assets\icn_classification_shop_dg.png" />
+    <Resource Include="assets\icn_classification_tag.png" />
+    <Resource Include="assets\icn_classification_tag_dg.png" />
+    <Resource Include="assets\icn_classification_title.png" />
+    <Resource Include="assets\icn_classification_title_dg.png" />
+    <Resource Include="assets\icn_classify.png" />
+    <Resource Include="assets\icn_cloud_fin.png" />
+    <Resource Include="assets\icn_cloud_stop.png" />
+    <Resource Include="assets\icn_cloud_stop_image.png" />
+    <Resource Include="assets\icn_cloud_wait.png" />
+    <Resource Include="assets\icn_cloud_wait_image.png" />
+    <Resource Include="assets\icn_complete.png" />
+    <Resource Include="assets\icn_default_image.png" />
+    <Resource Include="assets\icn_documenttype.png" />
+    <Resource Include="assets\icn_documenttype_bisinesscard.png" />
+    <Resource Include="assets\icn_documenttype_bisinesscard_dg.png" />
+    <Resource Include="assets\icn_documenttype_document.png" />
+    <Resource Include="assets\icn_documenttype_document_dg.png" />
+    <Resource Include="assets\icn_documenttype_photo.png" />
+    <Resource Include="assets\icn_documenttype_photo_dg.png" />
+    <Resource Include="assets\icn_documenttype_receipt.png" />
+    <Resource Include="assets\icn_documenttype_receipt_dg.png" />
+    <Resource Include="assets\icn_error.png" />
+    <Resource Include="assets\icn_espanol_16.png" />
+    <Resource Include="assets\icn_folder.png" />
+    <Resource Include="assets\icn_folder_inactive.png" />
+    <Resource Include="assets\icn_france_16.png" />
+    <Resource Include="assets\icn_germany_16.png" />
+    <Resource Include="assets\icn_help.png" />
+    <Resource Include="assets\icn_history.png" />
+    <Resource Include="assets\icn_history_import.png" />
+    <Resource Include="assets\icn_inactive_image.png" />
+    <Resource Include="assets\icn_information.png" />
+    <Resource Include="assets\icn_italy_16.png" />
+    <Resource Include="assets\icn_Japan_16.png" />
+    <Resource Include="assets\icn_korea_16.png" />
+    <Resource Include="assets\icn_loading.png" />
+    <Resource Include="assets\icn_multiple_image.png" />
+    <Resource Include="assets\icn_networkfolder.png" />
+    <Resource Include="assets\icn_network_inactive.png" />
+    <Resource Include="assets\icn_noimage.png" />
+    <Resource Include="assets\icn_notsorted.png" />
+    <Resource Include="assets\icn_no_OCR_16.png" />
+    <Resource Include="assets\icn_portugal_16.png" />
+    <Resource Include="assets\icn_program_icon_32_header.png" />
+    <Resource Include="assets\icn_question.png" />
+    <Resource Include="assets\icn_recentlyscan.png" />
+    <Resource Include="assets\icn_Recentry View.png" />
+    <Resource Include="assets\icn_rossiya_16.png" />
+    <Resource Include="assets\icn_scancheck.png" />
+    <Resource Include="assets\icn_scansnaphome.png" />
+    <Resource Include="assets\icn_scansnaphome_inactive.png" />
+    <Resource Include="assets\icn_scloud_error.png" />
+    <Resource Include="assets\icn_singapore_16.png" />
+    <Resource Include="assets\icn_tag.png" />
+    <Resource Include="assets\icn_taiwan_16.png" />
+    <Resource Include="assets\icn_ThisPC.png" />
+    <Resource Include="assets\icn_thumbnail_large.png" />
+    <Resource Include="assets\icn_thumbnail_small.png" />
+    <Resource Include="assets\icn_Trash.png" />
+    <Resource Include="assets\icn_uk_16.png" />
+    <Resource Include="assets\icn_usa_16.png" />
+    <Resource Include="assets\ico\cs.ico" />
+    <Resource Include="assets\ico\ct.ico" />
+    <Resource Include="assets\ico\de.ico" />
+    <Resource Include="assets\ico\en.ico" />
+    <Resource Include="assets\ico\es.ico" />
+    <Resource Include="assets\ico\fr.ico" />
+    <Resource Include="assets\ico\icn_auto_16.png" />
+    <Resource Include="assets\ico\it.ico" />
+    <Resource Include="assets\ico\jp.ico" />
+    <Resource Include="assets\ico\kr.ico" />
+    <Resource Include="assets\ico\pt.ico" />
+    <Resource Include="assets\ico\ru.ico" />
+    <Resource Include="assets\image_change_advance.png" />
+    <Resource Include="assets\image_change_back.png" />
+    <Resource Include="assets\img_multiple.png" />
+    <Resource Include="assets\img_ScanSnaplogo.png" />
+    <Resource Include="assets\program_icon.ico" />
+    <Resource Include="assets\program_icon_64.png" />
+    <Resource Include="assets\radiobutton_off.png" />
+    <Resource Include="assets\radiobutton_on.png" />
+    <Resource Include="assets\splash.png" />
+    <Content Include="Samples\closed-hat-trimmed.wav" />
+    <Content Include="Samples\crash-trimmed.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\kick-trimmed.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\open-hat-trimmed.wav" />
+    <Content Include="Samples\snare-trimmed.wav" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
