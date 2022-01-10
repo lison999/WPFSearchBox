@@ -2,22 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:WpfApp1.Controls"
                     >
-
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
-    <controls:Select x:Key="ConditionsSelect"></controls:Select>
-    <controls:TitlePathConverter TitleP="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=controls:SearchBox}, Path=TitlePath}" x:Key="titlePathConverter" />
-    <controls:TitleMultiValueConverter x:Key="titleMultiConverter"/>
-    <controls:ConditionTypeMultiValueConverter x:Key="conditionTypeConverter"/>
-
-    <!--<local:SearchCondition Type="OrderType" Value="limit" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionLimit"></local:SearchCondition>
-            <local:SearchCondition Type="OrderType" Value="Market" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionMarket"></local:SearchCondition>
-            <local:SearchCondition Type="Side" Value="Buy" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionBuy"></local:SearchCondition>
-            <local:SearchCondition Type="Side" Value="Sell" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionSell"></local:SearchCondition>-->
     <ControlTemplate x:Key="SearchBoxMagnifyTemplate" TargetType="{x:Type Button}">
         <Grid Width="40" Height="30">
             <VisualStateManager.VisualStateGroups>
@@ -253,64 +237,7 @@
         <Setter Property="Margin" Value="0,0,4,0"/>
     </Style>
 
-    <DataTemplate x:Key="SearchItemsDataTemplate" >       
-        <StackPanel Orientation="Vertical" >
-            <Border Style="{StaticResource PopupLabelBackgroundStyle}">
-                <TextBlock x:Name="PART_TitleTextBlock" Style="{StaticResource PopupLabelStyle}">
-                    <TextBlock.Text>
-                        <MultiBinding Converter="{StaticResource titleMultiConverter}" >
-                            <Binding Path="."></Binding>
-                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=controls:SearchBox}" Path="TitlePath"></Binding>
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-            </Border>
-            <ItemsControl>
-                <ItemsControl.ItemsSource>
-                    <MultiBinding Converter="{StaticResource conditionTypeConverter}">
-                        <Binding Path="."/>
-                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=controls:SearchBox}" Path="ConditionType"></Binding>
-                    </MultiBinding>
-                </ItemsControl.ItemsSource>
-                <ItemsControl.Style>
-                    <Style TargetType="{x:Type ItemsControl}">
-                        <Setter Property="IsTabStop" Value="False"/>
-                        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-                    </Style>
-                </ItemsControl.Style>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Style="{StaticResource SearchConditionButton}"  IsEnabled="{Binding IsActive}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Border Background="{TemplateBinding Background}" x:Name="SearchConditionBackground">
-                                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                            <TextBlock Text="{Binding Value}" VerticalAlignment="Center" Margin="5,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="true">
-                                            <Setter Property="Background" Value="#dceaf7" TargetName="SearchConditionBackground"/>
-                                        </Trigger>
-                                        <Trigger Property="IsEnabled" Value="false">
-                                            <Setter Property="Background" Value="LightGray" TargetName="SearchConditionBackground"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-    </DataTemplate>
-
-    <Style TargetType="{x:Type controls:SearchBox}">
+    <Style TargetType="{x:Type controls:SearchBox}">      
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:SearchBox}">
@@ -320,8 +247,8 @@
                             CornerRadius="2"
                             BorderBrush="#aeaeae"
                             BorderThickness="1"
-                            Background="White">
-                            <Grid Height="28px" Width="{Binding SearchBoxWidth, Mode=TwoWay}" ShowGridLines="False">
+                            >
+                            <Grid Height="28px" Width="{TemplateBinding Width}" ShowGridLines="False">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40px" />
                                     <ColumnDefinition Width="*" />
@@ -336,14 +263,12 @@
                                       Grid.Row="0"
                                       Grid.Column="1"
                                       HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Hidden"
-                                      Background="White"
+                                      VerticalScrollBarVisibility="Hidden"                                      
                                       >
-                                    <StackPanel Name="SearchConditionsStack"
-                                        Width="Auto"
+                                    <StackPanel Name="SearchConditionsStack"                                     
                                         Height="24"
-                                        Orientation="Horizontal">   
-                                        <ItemsControl x:Name="_itemsControl" ItemsSource="{Binding SelectConditionTypes,RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                        Orientation="Horizontal">
+                                        <ItemsControl x:Name="PART__SelectItemsControl" ItemsSource="{Binding SelectedItemsSource,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}">
                                             <ItemsControl.Style>
                                                 <Style TargetType="{x:Type ItemsControl}">
                                                     <Setter Property="IsTabStop" Value="False"/>
@@ -361,7 +286,7 @@
                                                         CornerRadius="5"
                                                         Style="{StaticResource SearchItemStyle}">
                                                         <StackPanel Width="Auto" Height="24" Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding Path=Value}">
+                                                            <TextBlock Text="{Binding Value}">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="TextBlock">
                                                                         <Setter Property="Margin" Value="5,0,0,0"/>
@@ -379,8 +304,8 @@
                                                             </TextBlock>
 
                                                             <Button
-                                                                 Command="{Binding DelConditionCommand,RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                                CommandParameter="{Binding DelConditionCommandParameter}"
+                                                                Command="{Binding DelConditionCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=controls:SearchBox}}"
+                                                                CommandParameter="{Binding}"
                                                                 Width="24"
                                                                 Height="24"
                                                                 BorderThickness="0"
@@ -393,13 +318,12 @@
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-                                        <TextBox BorderThickness="0" MinWidth="300" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
+                                        <TextBox Text="{Binding Text,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}" BorderThickness="0" MinWidth="300" VerticalAlignment="Center" VerticalContentAlignment="Center" Height="24"/>
                                     </StackPanel>
                                 </ScrollViewer>
 
                                 <Button Grid.Row="0" Grid.Column="2"
-                                    x:Name="PART_DelConditionCommand"    
-                                    Command="{Binding DelConditionCommand,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    x:Name="PART_AllDelCondition"
                                     BorderThickness="0"
                                     Visibility="Visible"
                                     Background="Transparent" Template="{StaticResource SearchBoxDelTemplate}">  
@@ -418,22 +342,13 @@
                                     Height="Auto"
                                     Orientation="Vertical">
                                 <Border Width="Auto" Height="Auto" Style="{DynamicResource PopUpOutBorderStyle}">
-                                    <StackPanel MinWidth="100" Height="Auto" Orientation="Vertical">
-                                        <ItemsControl Name="PART_SearchConditionsItemsControlOne" ItemTemplate="{StaticResource SearchItemsDataTemplate}" ItemsSource="{Binding SearchConditions,RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                            <ItemsControl.Style>
-                                                <Style TargetType="{x:Type ItemsControl}">
-                                                    <Setter Property="IsTabStop" Value="False"/>
-                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-                                                    <Setter Property="ItemTemplateSelector" Value="{DynamicResource ConditionsSelect}"/>
-                                                </Style>
-                                            </ItemsControl.Style>
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <StackPanel Orientation="Vertical"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>                                          
-                                        </ItemsControl>
-                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{TemplateBinding ItemsSource}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <controls:SearchBoxItem Style="{DynamicResource DefaultSearchBoxItem}" />                                                
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </Border>
                             </StackPanel>
                         </Popup>
@@ -443,26 +358,58 @@
         </Setter>
     </Style>
 
-
-    <Style TargetType="{x:Type controls:SearchBoxItem}">
+    <Style x:Key="DefaultSearchBoxItem" TargetType="{x:Type controls:SearchBoxItem}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:SearchBoxItem}">
-                    <Grid>
-                        <TextBlock Text="{Binding TitlePath}"/>
-                        <ItemsControl ItemsSource="{Binding Conditions}">
+                    <StackPanel MinWidth="100" Height="Auto" Orientation="Vertical">
+                        <Border Style="{StaticResource PopupLabelBackgroundStyle}">
+                            <TextBlock Text="{TemplateBinding Title}" Style="{StaticResource PopupLabelStyle}" />
+                        </Border>
+                        <ItemsControl ItemsSource="{TemplateBinding ItemsSource}">
+                            <ItemsControl.Style>
+                                <Style TargetType="{x:Type ItemsControl}">
+                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                                    <Setter Property="ItemTemplateSelector" Value="{DynamicResource ConditionsSelect}"/>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Content="Abc"/>
+                                    <Button x:Name="PART_SearchConditionButton" Command="{Binding SearchConditionButtonCommand
+                                        ,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=controls:SearchBoxItem}}"
+                                            CommandParameter="{Binding ElementName=PART_SearchConditionButton}"
+                                            Style="{StaticResource SearchConditionButton}"
+                                            >
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border Background="{TemplateBinding Background}" x:Name="SearchConditionBackground">
+                                                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                                        <TextBlock Text="{Binding Value}" VerticalAlignment="Center" Margin="5,0"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="#dceaf7" TargetName="SearchConditionBackground"/>
+                                                    </Trigger>
+                                                    <!--<Trigger Property="IsEnabled" Value="false">
+                                                        <Setter Property="Background" Value="LightGray" TargetName="SearchConditionBackground"/>
+                                                    </Trigger>-->
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                    </Grid>
+                    </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
-    
-    
 </ResourceDictionary>

@@ -1,27 +1,25 @@
-﻿using System;
+﻿using Prism.Commands;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using Expression = System.Linq.Expressions.Expression;
 
 namespace WpfApp1.Controls
 {
     [TemplatePart(Name = "PART_SelectSearchConditionBtn", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_AllDelCondition", Type = typeof(Button))]
     [TemplatePart(Name = "PART_SearchConditionsPopup", Type = typeof(Popup))]
-    [TemplatePart(Name = "PART_SearchConditionsItemsControlOne", Type = typeof(ItemsControl))]
-    [TemplatePart(Name = "PART_TitleTextBlock", Type = typeof(TextBlock))]
+    [TemplatePart(Name = "PART__SelectItemsControl", Type = typeof(ItemsControl))]
+    [TemplatePart(Name = "PART_SearchItem", Type = typeof(SearchBoxItem))]    
     public class SearchBox : ItemsControl
     {
         #region Ctor
@@ -36,13 +34,18 @@ namespace WpfApp1.Controls
             {
                 PART_SelectSearchConditionBtn.Click += SelectSearchConditionBtn_Click;
 
-
-                PART_TitleTextBlock.SetBinding(TextBlock.TextProperty, new Binding(TitlePath));
+                //----两种绑定方式------
+                //条件中的删除按钮 [前台绑定]
+                DelConditionCommand = new DelegateCommand<object>(DelConditionCommandHandle);
+                //总删除按钮 【后台绑定】
+                PART_AllDelCondition.Command = DelConditionCommand;                
             };
         }
+
         #endregion
 
-        #region Methoeds
+        #region Methods private
+        //展开下拉列表
         private void SelectSearchConditionBtn_Click(object sender, RoutedEventArgs e)
         {
             PART_SearchConditionsPopup.IsOpen = false;
@@ -54,115 +57,132 @@ namespace WpfApp1.Controls
                 PART_SearchConditionsPopup.IsOpen = true;
             }
         }
+
+        //清除选择的项
+        private void DelConditionCommandHandle(object obj)
+        {
+            //不传入条件就是删除全部
+            if (obj == null)
+            {
+                CopySelectedItemsSource.Clear();
+                ClearButton();
+            }
+            else
+            {
+                CopySelectedItemsSource.Remove(obj);
+                DelButton(obj);
+            }
+        }
         #endregion
 
-        #region Private
+        #region Methods public
+        public void AddItem(SearchBoxItem item)
+        {
+            ItemContents.Add(item);
+        }
+
+        public void AddSelectedItem(object item)
+        {
+            CopySelectedItemsSource.Add(item);
+            SelectedItemsSource = CopySelectedItemsSource;
+        }
+        public void AddButton(Button button)
+        {
+            button.IsEnabled = false;
+            buttons.Add(button);
+        }
+
+        private void DelButton(object obj)
+        {
+            var button = buttons.FirstOrDefault(f => f.DataContext == obj);
+            if (button != null)
+            {
+                button.IsEnabled = true;
+                buttons.Remove(button);
+            }
+        }
+
+        private void ClearButton()
+        {
+            foreach (var item in buttons)
+            {
+                item.IsEnabled = true;
+            }
+            buttons.Clear();
+        }
+
+        public bool IsSelectedItems(object item)
+        {
+           var obj = CopySelectedItemsSource.FirstOrDefault(f => f == item);
+            if (obj == null)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Property Private
+        //展开下拉列表按钮
         private Button PART_SelectSearchConditionBtn;
+        //删除所有选择条件按钮
+        private Button PART_AllDelCondition;
+        //下拉列表容器
         private Popup PART_SearchConditionsPopup;
-        private TextBlock PART_TitleTextBlock;
-        private ItemsControl PART_SearchConditionsItemsControlOne;
+        private readonly List<SearchBoxItem> ItemContents = new List<SearchBoxItem>();
+        private ICommand _delConditionCommand;
+        private ObservableCollection<object> CopySelectedItemsSource = new ObservableCollection<object>();
+        private List<Button> buttons = new List<Button>();
         #endregion
 
-        #region Public
-
-        #endregion
-
-        #region DP
-
-        public SearchBoxItem SearchBoxItem
-        {
-            get { return (SearchBoxItem)GetValue(SearchBoxItemProperty); }
-            set { SetValue(SearchBoxItemProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SearchBoxItem.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SearchBoxItemProperty =
-            DependencyProperty.Register("SearchBoxItem", typeof(SearchBoxItem), typeof(SearchBox), new PropertyMetadata(null));
-
-
-        public IEnumerable SearchConditions
-        {
-            get { return (IEnumerable)GetValue(SearchConditionsProperty); }
-            set { SetValue(SearchConditionsProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SearchConditions.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SearchConditionsProperty =
-            DependencyProperty.Register("SearchConditions", typeof(IEnumerable), typeof(SearchBox), new FrameworkPropertyMetadata(null, SearchConditionHandle));
-
-        private static void SearchConditionHandle(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            //((SearchBox)dependencyObject).xxx();
-        }
-
-
-        public DataTemplate xxx(DataTemplate tem)
-        {
-            StackPanel check = tem.LoadContent() as StackPanel;
-            //datatempalte.FindName("PART_TitleTextBlock");
-            var textb = FindControl.FindFirstVisualChild<TextBlock>(check, "PART_TitleTextBlock");
-
-            textb.SetBinding(TextBlock.TextProperty, new Binding(TitlePath));
-            //textb.Text = "{Binding " + Title + "}";
-            //tem
-            return tem;
-        }
-
-        public IEnumerable ConditionTypes
-        {
-            get { return (IEnumerable)GetValue(ConditionTypesProperty); }
-            set { SetValue(ConditionTypesProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SearchConditions.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ConditionTypesProperty =
-            DependencyProperty.Register("ConditionTypes", typeof(IEnumerable), typeof(SearchBox), new FrameworkPropertyMetadata(null));
-
-
-        public string TitlePath
-        {
-            get { return (string)GetValue(TitlePathProperty); }
-            set { SetValue(TitlePathProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TitlePathProperty =
-            DependencyProperty.Register("TitlePath", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(string.Empty,
-                new PropertyChangedCallback(TitlePathCallBack)));
-
-        private static void TitlePathCallBack(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            string newValue = e.NewValue.ToString();
-            ((SearchBox)d).TitlePathHandle(newValue);
-        }
-
-        public void TitlePathHandle(string newValue)
-        {
-
-
-                    
-        }
-
-        public string ConditionType
-        {
-            get { return (string)GetValue(ConditionTypeProperty); }
-            set { SetValue(ConditionTypeProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ConditionTypeProperty =
-            DependencyProperty.Register("ConditionType", typeof(string), typeof(SearchBox), new FrameworkPropertyMetadata(string.Empty));
-
-
+        #region Property Public
         public ICommand DelConditionCommand
         {
-            get { return (ICommand)GetValue(DelConditionCommandProperty); }
-            set { SetValue(DelConditionCommandProperty, value); }
+            get { return _delConditionCommand; }
+            set { _delConditionCommand = value; }
+        }
+        #endregion
+
+        #region Property DP
+
+        /// <summary>
+        /// SearchBox子控件模板
+        /// </summary>
+        public SearchBoxItem ItemContent
+        {
+            get { return (SearchBoxItem)GetValue(ItemContentProperty); }
+            set { SetValue(ItemContentProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DelConditionCommandProperty =
-            DependencyProperty.Register("DelConditionCommand", typeof(int), typeof(SearchBox));
+        public static readonly DependencyProperty ItemContentProperty =
+            DependencyProperty.Register("ItemContent", typeof(SearchBoxItem), typeof(SearchBox), new PropertyMetadata(null));
+
+        /// <summary>
+        /// 传给viewModel的选中条件
+        /// </summary>
+        public IEnumerable SelectedItemsSource
+        {
+            get { return (IEnumerable)GetValue(SelectedItemsSourceProperty); }
+            set { SetValue(SelectedItemsSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedItemSources.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedItemsSourceProperty =
+            DependencyProperty.Register("SelectedItemsSource", typeof(IEnumerable), typeof(SearchBox), new PropertyMetadata(null));
+
+        //public string Text
+        //{
+        //    get { return (string)GetValue(TextProperty); }
+        //    set { SetValue(TextProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty TextProperty =
+        //    DependencyProperty.Register("Text", typeof(string), typeof(SearchBox), new PropertyMetadata(string.Empty));
+
 
         #endregion
 
@@ -172,50 +192,13 @@ namespace WpfApp1.Controls
             base.OnApplyTemplate();
 
             PART_SelectSearchConditionBtn = GetTemplateChild("PART_SelectSearchConditionBtn") as Button;
-            PART_SearchConditionsPopup = GetTemplateChild("PART_SearchConditionsPopup") as Popup;
-            PART_SearchConditionsItemsControlOne = GetTemplateChild("PART_SearchConditionsItemsControlOne") as ItemsControl;
-            PART_TitleTextBlock = GetTemplateChild("PART_TitleTextBlock") as TextBlock;
+            PART_AllDelCondition = GetTemplateChild("PART_AllDelCondition") as Button;            
+            PART_SearchConditionsPopup = GetTemplateChild("PART_SearchConditionsPopup") as Popup;          
         }
         #endregion
     }
 
-    public class SearchBoxNew : Selector
-    {
-        static SearchBoxNew()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchBoxNew), new FrameworkPropertyMetadata(typeof(SearchBoxNew)));
-        }
-
-        public SearchBoxNew()
-        {
-            this.Loaded += (s, e) =>
-            {
-               
-            };
-        }
-
-        #region DP
-
-
-        public SearchBoxItem Item
-        {
-            get { return (SearchBoxItem)GetValue(ItemProperty); }
-            set { SetValue(ItemProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Item.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ItemProperty =
-            DependencyProperty.Register("Item", typeof(SearchBoxItem), typeof(SearchBoxNew), new PropertyMetadata(null));
-
-
-        #endregion
-    }
-
-    [TemplatePart(Name = "PART_SelectSearchConditionBtn", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_SearchConditionsPopup", Type = typeof(Popup))]
-    [TemplatePart(Name = "PART_SearchConditionsItemsControlOne", Type = typeof(ItemsControl))]
-    [TemplatePart(Name = "PART_TitleTextBlock", Type = typeof(TextBlock))]
-    public class SearchBoxItem : ContentControl
+    public class SearchBoxItem : ItemsControl
     {
         #region Ctor
         static SearchBoxItem()
@@ -227,86 +210,67 @@ namespace WpfApp1.Controls
         {
             this.Loaded += (s, e) =>
             {
-                //PART_SelectSearchConditionBtn.Click += SelectSearchConditionBtn_Click;
+                var parent = this.FindParent<SearchBox>();
+                searchBox = parent;
 
+                //将父控件中的条件转化到本控件中。
+                var ItemsSourceBind = BindingOperations.GetBinding(searchBox.ItemContent, SearchBoxItem.ItemsSourceProperty);
+                var TitleBin = BindingOperations.GetBinding(searchBox.ItemContent, SearchBoxItem.TitleProperty);
+
+                BindingOperations.SetBinding(this, SearchBoxItem.ItemsSourceProperty, ItemsSourceBind);
+                BindingOperations.SetBinding(this, SearchBoxItem.TitleProperty, TitleBin);
+                
+                searchBox.AddItem(this);      
             };
-        }
-        #endregion
 
-        #region Methoeds
-        private void SelectSearchConditionBtn_Click(object sender, RoutedEventArgs e)
+            SearchConditionButtonCommand = new DelegateCommand<Button>(SearchConditionButtonCommandHandle);
+        }
+
+        private void SearchConditionButtonCommandHandle(Button obj)
         {
-            PART_SearchConditionsPopup.IsOpen = false;
-            PART_SearchConditionsPopup.IsOpen = true;
-            PART_SearchConditionsPopup.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Scroll;
-
-            if (PART_SearchConditionsPopup.IsOpen == false)
-            {
-                PART_SearchConditionsPopup.IsOpen = true;
-            }
+            searchBox.AddButton(obj);
+            searchBox.AddSelectedItem(obj.DataContext);
         }
+
         #endregion
 
-        #region Private
-        private Button PART_SelectSearchConditionBtn;
-        private Popup PART_SearchConditionsPopup;
-        private TextBlock PART_TitleTextBlock;
-        private ItemsControl PART_SearchConditionsItemsControlOne;
+        #region Property Private
+        //父控件
+        private SearchBox searchBox { get; set; }
+
+        //子空间中的按钮Command
+        private ICommand _searchConditionButtonCommand;
         #endregion
 
-        #region Public
-
-        public object Content
+        #region Property Public
+        public ICommand SearchConditionButtonCommand
         {
-            get { return (object)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(object), typeof(SearchBoxItem), new PropertyMetadata(null));
-
-
-        #endregion
-
-        #region Override
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            PART_SelectSearchConditionBtn = GetTemplateChild("PART_SelectSearchConditionBtn") as Button;
-            PART_SearchConditionsPopup = GetTemplateChild("PART_SearchConditionsPopup") as Popup;
-            PART_SearchConditionsItemsControlOne = GetTemplateChild("PART_SearchConditionsItemsControlOne") as ItemsControl;
-            PART_TitleTextBlock = GetTemplateChild("PART_TitleTextBlock") as TextBlock;
-
-
-        }
-        #endregion
-    }
-
-    public class SearchBoxConditionTypes : ItemsControl
-    {
-        #region Ctor
-        static SearchBoxConditionTypes()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchBoxConditionTypes), new FrameworkPropertyMetadata(typeof(SearchBoxConditionTypes)));
+            get { return _searchConditionButtonCommand; }
+            set { _searchConditionButtonCommand = value; }
         }
         #endregion
 
+        #region Public DP
 
-        #region Public
-
-
-        public object Content
+        public string Title
         {
-            get { return (object)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(object), typeof(SearchBoxItem), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(SearchBoxItem), new PropertyMetadata(string.Empty));
 
+        public Button SearchConditionButton
+        {
+            get { return (Button)GetValue(SearchConditionButtonProperty); }
+            set { SetValue(SearchConditionButtonProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SearchConditionButton.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SearchConditionButtonProperty =
+            DependencyProperty.Register("SearchConditionButton", typeof(Button), typeof(SearchBoxItem), new PropertyMetadata(null));
 
         #endregion
 
@@ -318,267 +282,7 @@ namespace WpfApp1.Controls
         #endregion
     }
 
-    public class Select : DataTemplateSelector
-    {
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
-        {
-            var u = container as FrameworkElement;
-
-            var tem = u.FindResource("SearchItemsDataTemplate") as DataTemplate;
-
-            StackPanel check = tem.LoadContent() as StackPanel;
-            //datatempalte.FindName("PART_TitleTextBlock");
-            var textb = FindControl.FindFirstVisualChild<TextBlock>(check, "PART_TitleTextBlock");
-            textb.Text = "abc";
-
-            return tem;
-        }
-    }
-
-    public class TitlePathConverter : DependencyObject, IValueConverter
-    {
-        public string TitleP
-        {
-            get { return (string)GetValue(TitlePProperty); }
-            set { SetValue(TitlePProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for TitleP.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TitlePProperty =
-            DependencyProperty.Register("TitleP", typeof(string), typeof(TitlePathConverter), new PropertyMetadata(string.Empty));
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            Type type = value.GetType();            
-            var getti = TitleP;
-            var ss= type.GetProperty("Title");
-            //var p= type.GetFields().FirstOrDefault(x => x.Name == parameter.ToString());
-
-            //string valu = ss.GetValue(value).ToString();
-
-            return "Abc";           
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
-    }
-
-    public class TitleMultiValueConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            try
-            {
-                //binding
-                object dataContext = values[0];
-                //SearchBox TitlePath
-                string titlePath = values[1] as string;
-                string value = dataContext.GetType().GetProperties().FirstOrDefault(x => x.Name == titlePath).GetValue(dataContext)?.ToString();
-                return value;
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ConditionTypeMultiValueConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            try
-            {
-                //binding
-                var dataContext = values[0];
-                //SearchBox ConditionType
-                string conditionType = values[1] as string;
-                string[] classLevel = conditionType.Split('.');
-
-                Type type1 = dataContext.GetType();
-
-                ConverterHandle.VisitProperties<SearchCondition>(dataContext);
-
-                if (classLevel.Count() == 1)
-                {
-                    object value = dataContext.GetType().GetProperties().FirstOrDefault(x => x.Name == conditionType).GetValue(dataContext);
-                    return value;
-                }
-
-                string lastProperty = classLevel[classLevel.Count() - 1];
-
-                PropertyPath path = new PropertyPath(conditionType,null);
-
-                Type type = null;
-                foreach (var item in classLevel)
-                {
-                    //dataContext.GetType().GetProperty(item).PropertyType.GetProperty(item).GetValue(dataContext);
-                    if (type == null)
-                    {
-                        type = dataContext.GetType().GetProperties().FirstOrDefault(x => x.Name == item).PropertyType;
-                        continue;
-                    }
-                    else
-                    {
-                        var info = type.GetProperties().FirstOrDefault(x => x.Name == lastProperty);
-                        if (info == null)
-                        {
-                            type = type.GetProperties().FirstOrDefault(x => x.Name == item).PropertyType;
-                            continue;
-                        }
-
-                        var value = info.GetValue(lastProperty);
-                        return value;
-                    }           
-                }
-
-                return null;
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ConverterHandle
-    {
-        /// <summary>
-        /// 对未知类型的对象的属性进行递归访问
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        public static void VisitProperties<T>(object obj)
-        {
-            var type = obj.GetType();
-            var paraExpression = Expression.Parameter(typeof(T), "object");
-            foreach (var prop in type.GetProperties())
-            {
-                var propType = prop.PropertyType;
-                //判断是否为基本类型或String
-                //访问方式的表达式树为：obj =>obj.Property
-                if (propType.IsPrimitive || propType == typeof(String))
-                {
-                    VisitProperty<T>(obj, prop, paraExpression, paraExpression);
-                }
-
-                else
-                {
-                    //对于访问方式的表达式树为： obj=>obj.otherObj.Property。
-
-                    Console.WriteLine("not primitive property: " + prop.Name);
-                    var otherType = prop.PropertyType;
-                    MemberExpression memberExpression = Expression.Property(paraExpression, prop);
-                    //访问obj.otherObj里的所有公有属性
-                    foreach (var otherProp in otherType.GetProperties())
-                    {
-                        VisitProperty<T>(obj, otherProp, memberExpression, paraExpression);
-                    }
-                }
-                Console.WriteLine("--------------------------------");
-            }
-        }
-
-        /// <summary>
-        /// 执行表达式树为： obj=>obj.Property 或 obj=>obj.otherObj.Property的计算
-        /// </summary>
-        /// <param name="instanceExpression">最终访问属性的obj对象的表达式树的表示</param>
-        /// <param name="parameterExpression">类型T的参数表达式树的表示</param>
-        public static void VisitProperty<T>(Object obj, PropertyInfo prop, Expression instanceExpression, ParameterExpression parameterExpression)
-        {
-            Console.WriteLine("property name: " + prop.Name);
-
-            MemberExpression memExpression = Expression.Property(instanceExpression, prop);
-            //实现类型转换，如将Id的int类型转为object类型，便于下面的通用性
-            Expression objectExpression = Expression.Convert(memExpression, typeof(object));
-            Expression<Func<T, object>> lambdaExpression = Expression.Lambda<Func<T, object>>(objectExpression, parameterExpression);
-            //打印表达式树
-            Console.WriteLine("expression tree: " + lambdaExpression);
-            Func<T, object> func = lambdaExpression.Compile();
-            Console.WriteLine("value: " + func((T)obj)); //打印出得到的属性值
-        }
-
-        /// <summary>
-        /// 根据属性名获取属性值
-        /// </summary>
-        /// <typeparam name="T">对象类型</typeparam>
-        /// <param name="t">对象</param>
-        /// <param name="name">属性名</param>
-        /// <returns>属性的值</returns>
-        public static object GetPropertyValue<T>(T t, string name)
-        {
-            Type type = t.GetType();
-            PropertyInfo p = type.GetProperty(name);
-            if (p == null)
-            {
-                throw new Exception(String.Format("该类型没有名为{0}的属性", name));
-            }
-            var param_obj = Expression.Parameter(typeof(T));
-            var param_val = Expression.Parameter(typeof(object));
-
-            //转成真实类型，防止Dynamic类型转换成object
-            var body_obj = Expression.Convert(param_obj, type);
-
-            var body = Expression.Property(body_obj, p);
-            var getValue = Expression.Lambda<Func<T, object>>(body, param_obj).Compile();
-            return getValue(t);
-        }
-    }
-
-    public sealed class SearchBoxConditionConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null || parameter == null)
-                return Visibility.Visible;
-
-            var type = (string)value;
-            var condition = (string)parameter;
-            return type.Equals(condition) ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
-    }
-
-    public class FindControl:FrameworkElement
-    {
-        public static T FindFirstVisualChild<T>(DependencyObject obj, string childName) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is T && child.GetValue(NameProperty).ToString() == childName)
-                {
-                    return (T)child;
-                }
-                else
-                {
-                    T childOfChild = FindFirstVisualChild<T>(child, childName);
-                    if (childOfChild != null)
-                    {
-                        return childOfChild;
-                    }
-                }
-            }
-            return null;
-        }
-    }
-
+    #region DataSource
     public class SearchCondition
     {
         public string Title { get; set; }
@@ -591,7 +295,7 @@ namespace WpfApp1.Controls
         }
         public SearchCondition()
         {
-            
+
         }
     }
 
@@ -619,6 +323,41 @@ namespace WpfApp1.Controls
         public ConditionType()
         {
 
+        }
+    }
+    #endregion
+
+    public static class Ext
+    {
+        internal static T FindParent<T>(this DependencyObject dependencyObject) where T : class
+        {
+            while (dependencyObject != null)
+            {
+                var target = dependencyObject as T;
+                if (target != null)
+                    return target;
+
+                dependencyObject = LogicalTreeHelper.GetParent(dependencyObject) ?? VisualTreeHelper.GetParent(dependencyObject);
+            }
+            return null;
+        }
+
+        public static IEnumerable Append<T>(
+        this IEnumerable<T> source, params T[] tail)
+        {
+            return source.Concat(tail);
+        }
+
+        public static T GetValue<T>(this DependencyObject self, DependencyProperty property)
+        {
+            Contract.Requires(self != null);
+            Contract.Requires(property != null);
+
+            return self.GetValue(property).SafeCast<T>();
+        }
+        public static T SafeCast<T>(this object value)
+        {
+            return (value == null) ? default(T) : (T)value;
         }
     }
 }

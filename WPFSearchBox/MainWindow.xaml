@@ -9,10 +9,13 @@
         xmlns:controls="clr-namespace:WpfApp1.Controls"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-      
-    </Window.Resources>
-    <Grid>
-        <controls:SearchBox SearchConditions="{Binding SearchConditionss}" TitlePath="Title" ConditionType="ConditionTypePanel.ConditionTypes"/>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <Button Click="Button_Click" Content="Click Me"></Button>
+        <controls:SearchBox ItemsSource="{Binding SearchConditionss}" SelectedItemsSource="{Binding SelectConditions,Mode=TwoWay}" >
+            <controls:SearchBox.ItemContent>
+                <controls:SearchBoxItem Title="{Binding Title}" ItemsSource="{Binding ConditionTypePanel.ConditionTypes}">
+                </controls:SearchBoxItem>
+            </controls:SearchBox.ItemContent>
+        </controls:SearchBox>
+    </StackPanel>
 </Window>

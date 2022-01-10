@@ -14,7 +14,7 @@ namespace WpfApp1.ViewModels
     {
         public MainWindowViewModel()
         {
-            SelectConditionTypes = new ObservableCollection<ConditionType>();
+            SelectConditions = new ObservableCollection<object>();
             SearchConditionss = new ObservableCollection<SearchCondition>();
             SearchCondition search = new SearchCondition();
             //第一层
@@ -59,19 +59,24 @@ namespace WpfApp1.ViewModels
         }
 
         private ObservableCollection<SearchCondition> _searchConditions;
-
+        /// <summary>
+        /// 控件的itemsource
+        /// </summary>
         public ObservableCollection<SearchCondition> SearchConditionss
         {
             get { return _searchConditions; }
             set { _searchConditions = value; RaisePropertyChanged(nameof(SearchConditionss)); }
         }
 
-        private ObservableCollection<ConditionType> _selectConditionTypes;
 
-        public ObservableCollection<ConditionType> SelectConditionTypes
+        private ObservableCollection<object> _selectConditions;
+        /// <summary>
+        /// 选中的条件，值由控件传回来
+        /// </summary>
+        public ObservableCollection<object> SelectConditions
         {
-            get { return _selectConditionTypes; }
-            set { _selectConditionTypes = value; RaisePropertyChanged(nameof(SelectConditionTypes)); }
+            get { return _selectConditions; }
+            set { _selectConditions = value; RaisePropertyChanged(nameof(SelectConditions)); }
         }
     }
 }

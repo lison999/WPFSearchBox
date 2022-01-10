@@ -13,16 +13,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>-->
        
-            <!--<local:SearchCondition Type="OrderType" Value="limit" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionLimit"></local:SearchCondition>
-            <local:SearchCondition Type="OrderType" Value="Market" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionMarket"></local:SearchCondition>
-            <local:SearchCondition Type="Side" Value="Buy" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionBuy"></local:SearchCondition>
-            <local:SearchCondition Type="Side" Value="Sell" IsActive="True" Visibility="Visible" x:Key="OrderTypeConditionSell"></local:SearchCondition>-->
             <ControlTemplate x:Key="SearchBoxMagnifyTemplate" TargetType="{x:Type Button}">
                 <Grid Width="40" Height="30">
                     <VisualStateManager.VisualStateGroups>

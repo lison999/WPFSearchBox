@@ -28,53 +28,16 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-            this.DataContext = new MainWindowViewModel();
+            this.DataContext = new MainWindowViewModel();        
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //控件的两个筛选条件
+            var selet = ((MainWindowViewModel)this.DataContext).SelectConditions;
+            //var text = ((MainWindowViewModel)this.DataContext).Text;          
+        }
     }
-
-    //public class MainWindowViewModel:IDisposable, INotifyPropertyChanged
-    //{
-
-    //    //public MainWindowViewModel()
-    //    //{
-    //    //    engine = new AudioPlaybackEngine();
-    //    //    KickCommand = new DelegateCommand(() => 
-    //    //    {
-    //    //        engine.PlaySound(kick);
-    //    //        engine.PlaySound(crash);
-    //    //    });
-    //    //    CrashCommand = new DelegateCommand(() => engine.PlaySound(crash));
-    //    //    //SnareCommand = new DelegateCommand(() => engine.PlaySound("Samples\\snare-trimmed.wav"));
-    //    //    SnareCommand = new DelegateCommand(() => engine.PlaySound(@"D:\\lisong\\声音文件\\callNew.wav"));
-    //    //}
-
-    //    //public ICommand KickCommand { get; }
-    //    //public ICommand CrashCommand { get; }
-    //    //public ICommand SnareCommand { get; }
-
-    //    //private AudioPlaybackEngine engine;
-    //    ////readonly CachedSound kick = new CachedSound("Samples\\kick-trimmed.wav");
-    //    ////readonly CachedSound crash = new CachedSound("Samples\\crash-trimmed.wav");
-
-    //    //readonly CachedSound kick = new CachedSound("Samples\\kick-trimmed.wav");
-    //    //readonly CachedSound crash = new CachedSound("Samples\\crash-trimmed.wav");
-
-
-    //    //public void Dispose()
-    //    //{
-    //    //    engine?.Dispose();
-    //    //    engine = null;
-    //    //}
-
-
-    //    //public event PropertyChangedEventHandler PropertyChanged;
-
-    //    //protected virtual void OnPropertyChanged(string propertyName)
-    //    //{
-    //    //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    //    //}
-    //}
 
     class DelegateCommand : ICommand
     {
